@@ -114,7 +114,7 @@ export const DocumentsPage: React.FC = () => {
             <CardBody>
               <div className="space-y-2">
                 {documents.map(doc => (
-                  <div key={doc.id} className="flex items-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-200">
+                  <div key={doc.id} className="flex flex-col sm:flex-row items-start sm:items-center p-4 hover:bg-gray-50 rounded-lg transition-colors duration-200 gap-3">
                     <div className="p-2 bg-primary-50 rounded-lg mr-4">
                       <FileText size={24} className="text-primary-600" />
                     </div>
@@ -140,7 +140,7 @@ export const DocumentsPage: React.FC = () => {
                         <span>Modified {doc.lastModified}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-2 ml-4">
+                    <div className="flex items-center gap-2 sm:ml-4">
                       <Button variant="ghost" size="sm" className="p-2" aria-label="Download">
                         <Download size={18} />
                       </Button>

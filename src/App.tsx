@@ -31,6 +31,7 @@ import { DealsPage } from './pages/deals/DealsPage';
 import { ChatPage } from './pages/chat/ChatPage';
 import { CalendarPage } from './pages/calendar/CalendarPage';
 import { VideoCallPage } from './pages/video/VideoCallPage';
+import { PaymentsPage } from './pages/payments/PaymentsPage';
 
 function App() {
   return (
@@ -96,10 +97,15 @@ function App() {
           <Route path="/calendar" element={<DashboardLayout />}>
             <Route index element={<CalendarPage />} />
           </Route>
-
           {/* Video Call Routes */}
+
           <Route path="/video" element={<DashboardLayout />}>
             <Route index element={<VideoCallPage />} />
+          </Route>
+
+          {/* Payment Routes */}
+          <Route path="/payments" element={<DashboardLayout />}>
+            <Route index element={<PaymentsPage />} />
           </Route>
 
           {/* Redirect root to login */}
