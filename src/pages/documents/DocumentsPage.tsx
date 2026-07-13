@@ -119,7 +119,7 @@ export const DocumentsPage: React.FC = () => {
                       <FileText size={24} className="text-primary-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
                         <h3
                           className="text-sm font-medium text-gray-900 truncate cursor-pointer hover:text-primary-600"
                           onClick={() => setPreviewDoc(doc)}

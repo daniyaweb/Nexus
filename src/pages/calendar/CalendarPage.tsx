@@ -86,7 +86,7 @@ export const CalendarPage: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Meeting Calendar</h1>
           <p className="text-gray-600">Schedule and manage your meetings</p>
@@ -108,12 +108,12 @@ export const CalendarPage: React.FC = () => {
             </h2>
             <div className="space-y-3">
               {pendingMeetings.map(m => (
-                <div key={m.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                <div key={m.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 bg-gray-50 rounded-md gap-2">
                   <div>
                     <p className="text-sm font-medium text-gray-900">{m.title}</p>
                     <p className="text-xs text-gray-500">{m.start}</p>
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <Badge variant="warning">Pending</Badge>
                     <Button
                       size="xs"
@@ -219,7 +219,7 @@ export const CalendarPage: React.FC = () => {
       {/* Calendar */}
       <Card>
         <CardBody>
-          <div className="flex gap-4 mb-4">
+          <div className="flex flex-wrap gap-3 mb-4">
             <span className="flex items-center gap-1 text-xs text-gray-600"><span className="w-3 h-3 rounded-full bg-primary-600 inline-block"></span> Confirmed</span>
             <span className="flex items-center gap-1 text-xs text-gray-600"><span className="w-3 h-3 rounded-full bg-accent-500 inline-block"></span> Pending</span>
             <span className="flex items-center gap-1 text-xs text-gray-600"><span className="w-3 h-3 rounded-full bg-error-500 inline-block"></span> Declined</span>
@@ -231,11 +231,13 @@ export const CalendarPage: React.FC = () => {
             headerToolbar={{
               left: 'prev,next today',
               center: 'title',
-              right: 'dayGridMonth,timeGridWeek,timeGridDay',
+              right: 'dayGridMonth',
             }}
+            
             events={[...meetingEvents, ...slotEvents]}
             dateClick={handleDateClick}
             height="auto"
+            contentHeight="auto"
           />
         </CardBody>
       </Card>
