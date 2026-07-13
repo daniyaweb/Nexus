@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Users, Bell, Calendar, TrendingUp, AlertCircle, PlusCircle, DollarSign } from 'lucide-react';
@@ -15,6 +16,38 @@ import { investors } from '../../data/users';
 
 export const EntrepreneurDashboard: React.FC = () => {
   const { user } = useAuth();
+  const [showTour, setShowTour] = useState(false);
+  const [tourStep, setTourStep] = useState(0);
+
+  const tourSteps = [
+    'Welcome to Business Nexus! This is your Dashboard where you can see all your key stats.',
+    'Use the Calendar in the sidebar to schedule and manage meetings with investors.',
+    'Check your Payments section to manage your wallet and transactions.',
+    'Use Messages to chat directly with investors.',
+  ];
+
+  useEffect(() => {
+    const hasSeenTour = localStorage.getItem('nexus_tour_seen');
+    if (!hasSeenTour) {
+      setTimeout(() => setShowTour(true), 1000);
+    }
+  }, []);
+
+  const handleNextTour = () => {
+    if (tourStep < tourSteps.length - 1) {
+      setTourStep(tourStep + 1);
+    } else {
+      localStorage.setItem('nexus_tour_seen', 'true');
+      setShowTour(false);
+      setTourStep(0);
+    }
+  };
+
+  const handleSkipTour = () => {
+    localStorage.setItem('nexus_tour_seen', 'true');
+    setShowTour(false);
+    setTourStep(0);
+  };
   const [collaborationRequests, setCollaborationRequests] = useState<CollaborationRequest[]>([]);
   const [recommendedInvestors, setRecommendedInvestors] = useState(investors.slice(0, 3));
   const confirmedMeetings = meetings.filter(m => m.status === 'confirmed' && (m.organizerId === user?.id || m.inviteeId === user?.id));
@@ -42,6 +75,34 @@ export const EntrepreneurDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6 animate-fade-in">
+      {showTour && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-xl p-6 w-full max-w-md shadow-xl">
+            <div className="flex justify-between items-center mb-4">
+              <span className="text-xs font-medium text-primary-600 bg-primary-50 px-2 py-1 rounded-full">
+                Step {tourStep + 1} of {tourSteps.length}
+              </span>
+              <button onClick={handleSkipTour} className="text-gray-400 hover:text-gray-600 text-sm">
+                Skip tour
+              </button>
+            </div>
+            <p className="text-gray-700 text-sm mb-6">{tourSteps[tourStep]}</p>
+            <div className="flex justify-between items-center">
+              <div className="flex gap-1">
+                {tourSteps.map((_, i) => (
+                  <div key={i} className={`w-2 h-2 rounded-full ${i === tourStep ? 'bg-primary-600' : 'bg-gray-200'}`} />
+                ))}
+              </div>
+              <button
+                onClick={handleNextTour}
+                className="bg-primary-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary-700"
+              >
+                {tourStep === tourSteps.length - 1 ? 'Finish' : 'Next'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Welcome, {user.name}</h1>

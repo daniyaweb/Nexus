@@ -10,9 +10,10 @@ interface SidebarItemProps {
   to: string;
   icon: React.ReactNode;
   text: string;
+  className?: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text, className }) => {
   return (
     <NavLink
       to={to}
@@ -20,7 +21,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
         `flex items-center py-2.5 px-4 rounded-md transition-colors duration-200 ${isActive
           ? 'bg-primary-50 text-primary-700'
           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
-        }`
+        } ${className || ''}`
       }
     >
       <span className="mr-3">{icon}</span>
@@ -29,6 +30,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, icon, text }) => {
   );
 };
 
+
 export const Sidebar: React.FC = () => {
   const { user } = useAuth();
 
@@ -36,25 +38,25 @@ export const Sidebar: React.FC = () => {
 
   // Define sidebar items based on user role
   const entrepreneurItems = [
-    { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/dashboard/entrepreneur', icon: <Home size={20} />, text: 'Dashboard' , className: 'tour-dashboard' },
     { to: '/profile/entrepreneur/' + user.id, icon: <Building2 size={20} />, text: 'My Startup' },
     { to: '/investors', icon: <CircleDollarSign size={20} />, text: 'Find Investors' },
-    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' , className: 'tour-calendar' },
     { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
-    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' , className: 'tour-payments' },
+    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' , className: 'tour-messages'  },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/documents', icon: <FileText size={20} />, text: 'Documents' },
   ];
 
   const investorItems = [
-    { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard' },
+    { to: '/dashboard/investor', icon: <Home size={20} />, text: 'Dashboard', className: 'tour-dashboard' },
     { to: '/profile/investor/' + user.id, icon: <CircleDollarSign size={20} />, text: 'My Portfolio' },
     { to: '/entrepreneurs', icon: <Users size={20} />, text: 'Find Startups' },
-    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' },
+    { to: '/calendar', icon: <Calendar size={20} />, text: 'Calendar' , className: 'tour-calendar' },
     { to: '/video', icon: <Video size={20} />, text: 'Video Call' },
-    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' },
-    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages' },
+    { to: '/payments', icon: <Wallet size={20} />, text: 'Payments' , className: 'tour-payments' },
+    { to: '/messages', icon: <MessageCircle size={20} />, text: 'Messages', className: 'tour-messages' },
     { to: '/notifications', icon: <Bell size={20} />, text: 'Notifications' },
     { to: '/deals', icon: <FileText size={20} />, text: 'Deals' },
   ];
@@ -78,6 +80,7 @@ export const Sidebar: React.FC = () => {
                 to={item.to}
                 icon={item.icon}
                 text={item.text}
+                className={item.className}
               />
             ))}
           </div>
